@@ -1,0 +1,13 @@
+C:\Users\Maham\Documents\Coding\C++ Projects\SigninForm\Debug\SigninForm.vcxprojAssemblyReference.cache
+C:\Users\Maham\Documents\Coding\C++ Projects\SigninForm\Debug\SigninForm.MyForm.resources
+C:\Users\Maham\Documents\Coding\C++ Projects\SigninForm\Debug\SigninForm.vcxproj.GenerateResource.cache
+C:\Users\Maham\Documents\Coding\C++ Projects\SigninForm\Debug\SigninForm.exe
+C:\Users\Maham\Documents\Coding\C++ Projects\SigninForm\Debug\SigninForm.pdb
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.vcxprojAssemblyReference.cache
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.MyForm.resources
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.vcxproj.GenerateResource.cache
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.exe
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.pdb
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.MyForm1.resources
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.AdminHome.resources
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.CustomerHome.resources

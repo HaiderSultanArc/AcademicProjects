@@ -1,0 +1,22 @@
+﻿  Account.cpp
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Account.cpp(23,22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Account.cpp(44,13): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Account.cpp(73,13): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Account.cpp(142,13): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  AdminHome.cpp
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\AdminHome.cpp(8,22): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\AdminHome.cpp(51,24): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\AdminHome.cpp(72,29): warning C4018: '<': signed/unsigned mismatch
+  CustomerHome.cpp
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.h(2131,27): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.cpp(10,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.cpp(41,29): warning C4018: '<': signed/unsigned mismatch
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.cpp(58,13): warning C4996: 'localtime': This function or variable may be unsafe. Consider using localtime_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  MyForm.cpp
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.h(2131,27): warning C4018: '<': signed/unsigned mismatch
+  MyForm1.cpp
+  Source.cpp
+C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\CustomerHome.h(2131,27): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
+  Account.obj : MSIL module encountered; incremental linking is disabled for MSIL; performing full link
+  SigninForm.vcxproj -> C:\Users\Maham\Documents\Coding\C++ Projects\Assignments\Semester-2\Bank Mangement System\Debug\SigninForm.exe
