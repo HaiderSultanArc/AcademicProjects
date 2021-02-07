@@ -125,7 +125,7 @@ void SinglyLinkedList::updateNode(int nodeNumber, double updateData) {
     }
 }
 
-void SinglyLinkedList::searhcNode(double searchData, Node *node, int nodeNumber) {
+void SinglyLinkedList::searchNode(double searchData, Node *node, int nodeNumber) {
     if (node == nullptr) {
         std::cout << std::endl;
     }
@@ -134,7 +134,7 @@ void SinglyLinkedList::searhcNode(double searchData, Node *node, int nodeNumber)
             std::cout << std::endl << "Data: " << node->data << " is in " << nodeNumber;
         }
 
-        this->searhcNode(searchData, node->nextNode, nodeNumber + 1);
+        this->searchNode(searchData, node->nextNode, nodeNumber + 1);
     }
 }
 
@@ -144,7 +144,7 @@ void SinglyLinkedList::searchNode(double searchData) {
         std::cout << std::endl;
     }
     else {
-        this->searhcNode(searchData, this->head, 0);
+        this->searchNode(searchData, this->head, 0);
     }
 }
 

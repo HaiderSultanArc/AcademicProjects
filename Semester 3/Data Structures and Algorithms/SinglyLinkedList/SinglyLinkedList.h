@@ -30,7 +30,7 @@ public:
 
 private:
     Node* requiredNode(Node* node, int nodeNumber);
-    void searhcNode(double searchData, Node* node, int nodeNumber);
+    void searchNode(double searchData, Node* node, int nodeNumber);
     void display(Node* node);
 };
 
