@@ -1,4 +1,6 @@
 #include <iostream>
+#include <string>
+#include <list>
 #include "DataStructures.h"
 
 using namespace std;
@@ -13,21 +15,98 @@ int main() {
     testType = char(getchar());
 
     if (testType != 'M' and testType != 'm') {
-        cout << endl << "Creating the Stack: ";
-        testStack.push(10);
-        testStack.push(20);
-        testStack.push(30);
-        testStack.push(40);
-        testStack.push(50);
-        testStack.push(55);
-        testStack.display();
+        int choice;
 
-        cout << endl << "Popping the Top Element: ";
-        testStack.pop();
-        testStack.display();
+        cout << endl << "Which Test Do you want to Run? Enter Number";
+        cout << endl << "1) Reversing a String";
+        cout << endl << "2) Revering a Linked List";
+        cout << endl << "3) Balancing Brackets";
+        cout << endl << endl << "Your Choice: ";
+        cin >> choice;
 
-        cout << endl << "Top Element of Stack : " << testStack.topElement()->data;
-        cout << endl;
+        if (choice == 1) {
+            string str;
+
+            cout << endl << "Enter a String: ";
+            cin.ignore();
+            getline(cin, str);
+
+            for (char ch : str) {
+                testStack.push(ch);
+            }
+
+            cout << endl << "String before Reversing: " << str;
+
+            for (int ch = 0; ch < str.length(); ch++) {
+                str[ch] = testStack.topElement()->data;
+                testStack.pop();
+            }
+
+            cout << endl << "String after Reversing: " << str;
+        }
+        else if (choice == 2) {
+            list<char> testList;
+            list<char>::iterator listElement;
+
+            testList.push_back('L');
+            testList.push_back('I');
+            testList.push_back('S');
+            testList.push_back('T');
+
+            cout << endl << "Linked List before Reversing: ";
+
+            for (listElement = testList.begin(); listElement != testList.end(); listElement++) {
+                cout << *listElement;
+            }
+
+            for (listElement = testList.begin(); listElement != testList.end(); listElement++) {
+                testStack.push(*listElement);
+            }
+
+            testList.clear();
+
+            while (testStack.topElement() != nullptr) {
+                testList.push_back(testStack.topElement()->data);
+                testStack.pop();
+            }
+
+            cout << endl << "Linked List after Reversing: ";
+
+            for (listElement = testList.begin(); listElement != testList.end(); listElement++) {
+                cout << *listElement;
+            }
+        }
+        else if (choice == 3) {
+            string bracketExpression;
+
+            cout << endl << "Enter an Expressing with Brackets: ";
+            cin.ignore();
+            getline(cin, bracketExpression);
+
+            for (char ch : bracketExpression) {
+                if (ch == '[' or ch == '{' or ch == '(') {
+                    testStack.push(ch);
+                }
+                else if (ch == ']' or ch == '}' or ch == ')') {
+                    if (testStack.topElement() == nullptr) {
+                        break;
+                    }
+                    else if ((ch == ']' and testStack.topElement()->data != '[') or (ch == '}' and testStack.topElement()->data != '{') or (ch == ')' and testStack.topElement()->data != '(')) {
+                        break;
+                    }
+                    else {
+                        testStack.pop();
+                    }
+                }
+            }
+
+            if (testStack.topElement() == nullptr) {
+                cout << endl << "Brackets in Expression: " << bracketExpression << " are Balanced" << endl;
+            }
+            else {
+                cout << endl << "Brackets in Expression: " << bracketExpression << " are not Balanced" << endl;
+            }
+        }
     }
     else {
         int choice;
@@ -39,7 +118,7 @@ int main() {
             menu(choice);
 
             if (choice == 1) {
-                double inputData;
+                char inputData;
 
                 cout << endl << "Enter Data you want to Add: ";
                 cin >> inputData;

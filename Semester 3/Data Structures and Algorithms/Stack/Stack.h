@@ -5,7 +5,7 @@ class Element {
 public:
     Element* previousElement;
     Element* nextElement;
-    double data;
+    char data;
 
     Element() {
         this->previousElement = nullptr;
@@ -21,7 +21,7 @@ private:
 public:
     Stack();
 
-    void push(double inputData);
+    void push(char inputData);
     void pop();
     Element* topElement();
     void display();
