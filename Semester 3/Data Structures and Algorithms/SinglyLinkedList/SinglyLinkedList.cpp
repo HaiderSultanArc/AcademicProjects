@@ -100,6 +100,10 @@ void SinglyLinkedList::deleteNode(int nodeNumber) {
         if (requiredNode == nullptr) {
             return;
         }
+        else if (requiredNode->nextNode->nextNode == nullptr) {
+            std::cerr << std::endl << "Tail cannot be Deleted!";
+            std::cout << std::endl;
+        }
         else {
             requiredNode->nextNode = requiredNode->nextNode->nextNode;
 
