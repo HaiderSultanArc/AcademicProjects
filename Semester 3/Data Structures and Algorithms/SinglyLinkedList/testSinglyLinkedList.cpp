@@ -141,6 +141,6 @@ void menu(int &choice) {
     cout << endl << "6) Change Head";
     cout << endl << "7) Display List";
     cout << endl << "0) Exit";
-    cout << endl << "Your Choice: ";
+    cout << endl << endl << "Your Choice: ";
     cin >> choice;
 }
