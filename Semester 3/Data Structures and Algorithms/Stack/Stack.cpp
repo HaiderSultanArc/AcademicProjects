@@ -1,6 +1,7 @@
 #include "DataStructures.h"
 #include <iostream>
 
+
 Stack::Stack() {
     this->top = nullptr;
 }
