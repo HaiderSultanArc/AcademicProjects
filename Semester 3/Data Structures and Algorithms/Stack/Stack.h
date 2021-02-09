@@ -4,12 +4,10 @@
 class Element {
 public:
     Element* previousElement;
-    Element* nextElement;
     char data;
 
     Element() {
         this->previousElement = nullptr;
-        this->nextElement = nullptr;
         this->data = 0;
     }
 };
@@ -23,7 +21,8 @@ public:
 
     void push(char inputData);
     void pop();
-    Element* topElement();
+    char topElementData();
+    bool isEmpty();
     void display();
 
 private:

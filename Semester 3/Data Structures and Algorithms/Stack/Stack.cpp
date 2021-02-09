@@ -7,9 +7,8 @@ Stack::Stack() {
 }
 
 void Stack::push(char inputData) {
-    Element* newElement = new Element();
+    auto* newElement = new Element();
 
-    newElement->nextElement = nullptr;
     newElement->previousElement = this->top;
     newElement->data = inputData;
     this->top = newElement;
@@ -24,16 +23,24 @@ void Stack::pop() {
     }
     else {
         this->top = this->top->previousElement;
-        this->top->nextElement = nullptr;
     }
 }
 
-Element * Stack::topElement() {
+char Stack::topElementData() {
     if (this->top == nullptr) {
-        return nullptr;
+        return 0;
     }
     else {
-        return this->top;
+        return this->top->data;
+    }
+}
+
+bool Stack::isEmpty() {
+    if (this->top == nullptr) {
+        return true;
+    }
+    else {
+        return false;
     }
 }
 

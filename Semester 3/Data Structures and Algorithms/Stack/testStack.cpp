@@ -1,14 +1,17 @@
 #include <iostream>
 #include <string>
 #include <list>
+#include <cmath>
 #include "DataStructures.h"
 
 using namespace std;
 
 void stringReverse(Stack testStack);
 void linkedListReverse(Stack testStack);
-void balanceBrackets(Stack testStack);
-void evaluatePostfix(string expression, Stack testStack);
+bool balancedBrackets(const string& bracketExpression);
+string infixToPostfix(const string& infixExpression);
+void evaluatePostfix(const string& expression, Stack testStack);
+
 void evaluatePrefix(string expression, Stack testStack);
 void menu(int &choice);
 
@@ -37,18 +40,27 @@ int main() {
             linkedListReverse(testStack);
         }
         else if (choice == 3) {
-            balanceBrackets(testStack);
+            string bracketExpression;
+
+            cout << endl << "Enter an Expressing with Brackets: ";
+            cin.ignore();
+            getline(cin, bracketExpression);
+
+            balancedBrackets(bracketExpression);
         }
         else if (choice == 4) {
             string expression;
 
-            cout << endl << "Enter a Postfix Expression (Ex: 2 3 * 5 4 * + 9 -): ";
+            cout << endl << "Enter an Expression {Ex: ((1 + 2) * 3 - 4) * 5}: ";
             cin.ignore();
             getline(cin, expression);
 
-            evaluatePostfix(expression, testStack);
+            if (balancedBrackets(expression)) {
+                expression = infixToPostfix(expression);
+                evaluatePostfix(expression, testStack);
+            }
 
-            cout << endl << "Enter a Prefix Expression (Ex: - + * 2 3 * 5 4 9): ";
+            cout << endl << "Enter a Prefix Expression {Ex: - + * 2 3 * 5 4 9}: ";
             getline(cin, expression);
 
             evaluatePrefix(expression, testStack);
@@ -75,14 +87,8 @@ int main() {
                 testStack.pop();
             }
             else if (choice == 3) {
-                Element* topElement;
-
-                topElement = testStack.topElement();
-
-                if (topElement != nullptr) {
-                    cout << endl << "Top Element in Stack: " << topElement->data;
-                    cout << endl;
-                }
+                cout << endl << "Top Element in Stack: " << testStack.topElementData();
+                cout << endl;
             }
             else if (choice == 4) {
                 testStack.display();
@@ -110,8 +116,8 @@ void stringReverse(Stack testStack) {
 
     cout << endl << "String before Reversing: " << str;
 
-    for (int ch = 0; ch < str.length(); ch++) {
-        str[ch] = testStack.topElement()->data;
+    for (char & ch : str) {
+        ch = testStack.topElementData();
         testStack.pop();
     }
 
@@ -139,8 +145,8 @@ void linkedListReverse(Stack testStack) {
 
     testList.clear();
 
-    while (testStack.topElement() != nullptr) {
-        testList.push_back(testStack.topElement()->data);
+    while (not(testStack.isEmpty())) {
+        testList.push_back(testStack.topElementData());
         testStack.pop();
     }
 
@@ -151,36 +157,99 @@ void linkedListReverse(Stack testStack) {
     }
 }
 
-void balanceBrackets(Stack testStack) {
-    string bracketExpression;
-
-    cout << endl << "Enter an Expressing with Brackets: ";
-    cin.ignore();
-    getline(cin, bracketExpression);
+bool balancedBrackets(const string& bracketExpression) {
+    Stack tempStack;
 
     for (char ch : bracketExpression) {
         if (ch == '[' or ch == '{' or ch == '(') {
-            testStack.push(ch);
+            tempStack.push(ch);
         }
         else if (ch == ']' or ch == '}' or ch == ')') {
-            if (testStack.topElement() == nullptr) {
-                break;
-            }
-            else if ((ch == ']' and testStack.topElement()->data != '[') or (ch == '}' and testStack.topElement()->data != '{') or (ch == ')' and testStack.topElement()->data != '(')) {
+            if (tempStack.isEmpty() or (ch == ']' and tempStack.topElementData() != '[') or (ch == '}' and tempStack.topElementData() != '{') or (ch == ')' and tempStack.topElementData() != '(')) {
                 break;
             }
             else {
-                testStack.pop();
+                tempStack.pop();
             }
         }
     }
 
-    if (testStack.topElement() == nullptr) {
+    if (tempStack.isEmpty()) {
         cout << endl << "Brackets in Expression: " << bracketExpression << " are Balanced" << endl;
+        return true;
     }
     else {
         cout << endl << "Brackets in Expression: " << bracketExpression << " are not Balanced" << endl;
+        return false;
     }
+}
+
+int operatorPrecedance(char op) {
+    if (string(1, op).find_first_of("[]{}()") != string::npos) {
+        return 4;
+    }
+    else if (op == '^') {
+        return 3;
+    }
+    else if (string(1, op).find_first_of("/*") != string::npos) {
+        return 2;
+    }
+    else if (string(1, op).find_first_of("+-") != string::npos) {
+        return 1;
+    }
+    else {
+        return 0;
+    }
+}
+
+string infixToPostfix(const string& infixExpression) {
+    Stack tempStack;
+    string postfixExpression;
+    bool isBracketClosed = false;
+
+    for (char ch : infixExpression) {
+        if (ch <= '9' and ch >= '0') {
+            postfixExpression += ch;
+            postfixExpression += " ";
+        }
+        else if (string(1, ch).find_first_of("^/*+-") != string::npos) {
+            while (not(tempStack.isEmpty()) and string(1, tempStack.topElementData()).find_first_of("[{(") == string::npos and (operatorPrecedance(ch) > operatorPrecedance(tempStack.topElementData()))) {
+                postfixExpression += tempStack.topElementData();
+                postfixExpression += " ";
+                tempStack.pop();
+            }
+
+            if (isBracketClosed and (string(1, tempStack.topElementData()).find_first_of("/*") != string::npos)) {
+                postfixExpression += tempStack.topElementData();
+                postfixExpression += " ";
+                tempStack.pop();
+                isBracketClosed = false;
+            }
+
+            tempStack.push(ch);
+        }
+        else if (string(1, ch).find_first_of("[{(") != string::npos) {
+            tempStack.push(ch);
+        }
+        else if (string(1, ch).find_first_of(")}]") != string::npos) {
+            while (not(tempStack.isEmpty()) and string(1, tempStack.topElementData()).find_first_of("[{(") == string::npos) {
+                postfixExpression += tempStack.topElementData();
+                postfixExpression += " ";
+                tempStack.pop();
+                isBracketClosed = true;
+            }
+
+            tempStack.pop();
+        }
+    }
+
+    while (not(tempStack.isEmpty())) {
+        postfixExpression += tempStack.topElementData();
+        postfixExpression += " ";
+        tempStack.pop();
+    }
+
+    return postfixExpression;
 }
 
 double performOperation(double op1, double op2, char operation) {
@@ -202,37 +271,44 @@ double performOperation(double op1, double op2, char operation) {
             return op1 / op2;
         }
     }
+    else if (operation == '^') {
+        return pow(op1, op2);
+    }
+    else {
+        cerr << "Not an Operation!";
+        return 0;
+    }
 }
 
-void evaluatePostfix(string expression, Stack testStack) {
-    for (int ch = 0; ch < expression.length(); ch++) {
-        if (expression[ch] <= '9' and expression[ch] >= '0') {
-            testStack.push(expression[ch]);
+void evaluatePostfix(const string& expression, Stack testStack) {
+    for (char ch : expression) {
+        if (ch <= '9' and ch >= '0') {
+            testStack.push(ch);
         }
-        else if (expression[ch] == '+' or expression[ch] == '-' or expression[ch] == '*' or expression[ch] == '/') {
-            double op2 = (testStack.topElement()->data >= '0' and testStack.topElement()->data <= '9') ? (testStack.topElement()->data - 48) : (testStack.topElement()->data);
+        else if (ch == '+' or ch == '-' or ch == '*' or ch == '/' or ch == '^') {
+            double op2 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
             testStack.pop();
-            double op1 = (testStack.topElement()->data >= '0' and testStack.topElement()->data <= '9') ? (testStack.topElement()->data - 48) : (testStack.topElement()->data);
+            double op1 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
             testStack.pop();
 
-            double result = performOperation(op1, op2, expression[ch]);
+            double result = performOperation(op1, op2, ch);
 
             testStack.push(char(result));
         }
     }
 
-    cout << endl << expression << " = " << double(testStack.topElement()->data);
+    cout << endl << "Postfix Expression: " << expression << " = " << double(testStack.topElementData());
 }
 
 void evaluatePrefix(string expression, Stack testStack) {
-    for (int ch = expression.length() - 1; ch >= 0; ch--) {
+    for (int ch = int(expression.length() - 1); ch >= 0; ch--) {
         if (expression[ch] <= '9' and expression[ch] >= '0') {
             testStack.push(expression[ch]);
         }
         else if (expression[ch] == '+' or expression[ch] == '-' or expression[ch] == '*' or expression[ch] == '/') {
-            double op1 = (testStack.topElement()->data >= '0' and testStack.topElement()->data <= '9') ? (testStack.topElement()->data - 48) : (testStack.topElement()->data);
+            double op1 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
             testStack.pop();
-            double op2 = (testStack.topElement()->data >= '0' and testStack.topElement()->data <= '9') ? (testStack.topElement()->data - 48) : (testStack.topElement()->data);
+            double op2 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
             testStack.pop();
 
             double result = performOperation(op1, op2, expression[ch]);
@@ -241,7 +317,7 @@ void evaluatePrefix(string expression, Stack testStack) {
         }
     }
 
-    cout << endl << expression << " = " << double(testStack.topElement()->data);
+    cout << endl << expression << " = " << double(testStack.topElementData());
 }
 
 void menu(int &choice) {
