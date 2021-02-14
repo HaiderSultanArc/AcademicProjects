@@ -3,7 +3,29 @@
 #include <chrono>
 #include <windows.h>
 
+bool checkLargestToVisualize(const int* array, int numberOfElements) {
+    int largestNumber = array[0];
+
+    for (int i = 0; i < numberOfElements; i++) {
+        if (array[i] > largestNumber) {
+            largestNumber = array[i];
+        }
+    }
+
+    if (largestNumber > 100) {
+        std::cerr << std::endl << "Largest Element is More than 100, can't Visualize Sorting Algorithm" << std::endl;
+        return false;
+    }
+    else {
+        return true;
+    }
+}
+
 void SortingAlgorithms::selectionSort(int *array, int numberOfElements, bool visualize) {
+    if (visualize) {
+        visualize = checkLargestToVisualize(array, numberOfElements);
+    }
+
     clock_t timeStart, timeStop;
     timeStart = clock();
 
@@ -26,6 +48,10 @@ void SortingAlgorithms::selectionSort(int *array, int numberOfElements, bool vis
 }
 
 void SortingAlgorithms::bubbleSort(int *array, int numberOfElements, bool visualize) {
+    if (visualize) {
+        visualize = checkLargestToVisualize(array, numberOfElements);
+    }
+
     clock_t timeStart, timeStop;
     timeStart = clock();
 
@@ -51,10 +77,14 @@ void SortingAlgorithms::bubbleSort(int *array, int numberOfElements, bool visual
     timeStop = clock();
     double time = double(timeStop - timeStart) / double(CLOCKS_PER_SEC);
 
-    std::cout << std::endl << "Time taken by Selection Sort: " << time << " s" << std::endl;
+    std::cout << std::endl << "Time taken by Bubble Sort: " << time << " s" << std::endl;
 }
 
 void SortingAlgorithms::insertionSort(int *array, int numberOfElements, bool visualize) {
+    if (visualize) {
+        visualize = checkLargestToVisualize(array, numberOfElements);
+    }
+
     clock_t timeStart, timeStop;
     timeStart = clock();
 
@@ -81,20 +111,11 @@ void SortingAlgorithms::insertionSort(int *array, int numberOfElements, bool vis
     timeStop = clock();
     double time = double(timeStop - timeStart) / double(CLOCKS_PER_SEC);
 
-    std::cout << std::endl << "Time taken by Selection Sort: " << time << " s" << std::endl;
+    std::cout << std::endl << "Time taken by Insertion Sort: " << time << " s" << std::endl;
 }
 
 void SortingAlgorithms::algorithmVisualization(const int *array, int numberOfElements, const std::string& algorithm) {
-    COORD topLeft = {0, 0};
-    HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
-    CONSOLE_SCREEN_BUFFER_INFO screen;
-    DWORD written;
-
-    GetConsoleScreenBufferInfo(console, &screen);
-    FillConsoleOutputCharacterA(console, ' ', screen.dwSize.X * screen.dwSize.Y, topLeft, &written);
-    FillConsoleOutputAttribute(console, FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_BLUE, screen.dwSize.X * screen.dwSize.Y, topLeft, &written);
-    SetConsoleCursorPosition(console, topLeft);
-
+    system("cls");
     std::cout << std::endl << "Visualization of " << algorithm << ":" << std::endl << std::endl;
 
     for (int i = 0; i < numberOfElements; i++) {
