@@ -114,6 +114,82 @@ void SortingAlgorithms::insertionSort(int *array, int numberOfElements, bool vis
     std::cout << std::endl << "Time taken by Insertion Sort: " << time << " s" << std::endl;
 }
 
+void SortingAlgorithms::merge(const int *leftPart, int leftElements, const int *rightPart, int rightElements, int *array, bool visualize) {
+    int li = 0, ri = 0, i = 0;
+
+    while ((li < leftElements) and (ri < rightElements)) {
+        if (leftPart[li] <= rightPart[ri]) {
+            array[i] = leftPart[li];
+            li++;
+        }
+        else {
+            array[i] = rightPart[ri];
+            ri++;
+        }
+
+        i++;
+
+        if (visualize) {
+            SortingAlgorithms::algorithmVisualization(array, leftElements + rightElements, "Merge Sort");
+        }
+    }
+
+    while (li < leftElements) {
+        array[i] = leftPart[li];
+        li++;
+        i++;
+
+        if (visualize) {
+            SortingAlgorithms::algorithmVisualization(array, leftElements + rightElements, "Merge Sort");
+        }
+    }
+
+    while (ri < rightElements) {
+        array[i] = rightPart[ri];
+        ri++;
+        i++;
+
+        if (visualize) {
+            SortingAlgorithms::algorithmVisualization(array, leftElements + rightElements, "Merge Sort");
+        }
+    }
+}
+
+void SortingAlgorithms::mergeSort(int *array, int numberOfElements, bool visualize) {
+    if (visualize) {
+        visualize = checkLargestToVisualize(array, numberOfElements);
+    }
+
+    clock_t timeStart, timeStop;
+    timeStart = clock();
+
+    if (numberOfElements < 2) {
+        return;
+    }
+    else {
+        int midOfArray = numberOfElements / 2;
+        int leftPart[midOfArray];
+        int rightPart[numberOfElements - midOfArray];
+
+        for (int i = 0; i < midOfArray; i++) {
+            leftPart[i] = array[i];
+        }
+
+        for (int i = midOfArray; i < numberOfElements; i++) {
+            rightPart[i - midOfArray] = array[i];
+        }
+
+        SortingAlgorithms::mergeSort(leftPart, midOfArray);
+        SortingAlgorithms::mergeSort(rightPart, numberOfElements - midOfArray);
+        merge(leftPart, midOfArray, rightPart, numberOfElements - midOfArray, array, visualize);
+    }
+
+    timeStop = clock();
+    double time = double(timeStop - timeStart) / double(CLOCKS_PER_SEC);
+
+    std::cout << std::endl << "Time taken by Merge Sort: " << time << " s" << std::endl;
+}
+
 void SortingAlgorithms::algorithmVisualization(const int *array, int numberOfElements, const std::string& algorithm) {
     system("cls");
     std::cout << std::endl << "Visualization of " << algorithm << ":" << std::endl << std::endl;

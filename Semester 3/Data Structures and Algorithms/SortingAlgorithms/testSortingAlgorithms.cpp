@@ -11,7 +11,7 @@ int main() {
     testType = char(getchar());
 
     if (testType != 'm' and testType != 'M') {
-        for (int algorithm = 0; algorithm < 3; algorithm++) {
+        for (int algorithm = 3; algorithm < 4; algorithm++) {
             system("cls");
 
             int array[10] = {17, 3, 15, 13, 9, 19, 7, 5, 1, 11};
@@ -33,6 +33,9 @@ int main() {
             }
             else if (algorithm == 2) {
                 SortingAlgorithms::insertionSort(array, 10, true);
+            }
+            else if (algorithm == 3) {
+                SortingAlgorithms::mergeSort(array, 10, true);
             }
 
             cout << endl << "Array after Sorting: {";
@@ -72,6 +75,10 @@ int main() {
                 isSorted = true;
             }
             else if (choice == 4) {
+                SortingAlgorithms::mergeSort(array, sizeOfArray);
+                isSorted = true;
+            }
+            else if (choice == 5) {
                 cout << endl << "Enter Elements of Array: " << endl;
 
                 for (int i = 0; i < sizeOfArray; i++) {
@@ -116,7 +123,8 @@ void menu(int &choice) {
     cout << endl << "1) Selection Sort";
     cout << endl << "2) Bubble Sort";
     cout << endl << "3) Insertion Sort";
-    cout << endl << "4) Input Array";
+    cout << endl << "4) Merge Sort";
+    cout << endl << "5) Input Array";
     cout << endl << "0) Exit";
     cout << endl << endl << "Your Choice: ";
     cin >> choice;
