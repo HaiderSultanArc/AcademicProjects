@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
+#include "Stack.h"
 #include <list>
 #include <cmath>
-#include "DataStructures.h"
 
 using namespace std;
 
@@ -11,9 +11,8 @@ void linkedListReverse(Stack testStack);
 bool balancedBrackets(const string& bracketExpression);
 string infixToPostfix(const string& infixExpression);
 void evaluatePostfix(const string& expression, Stack testStack);
-
 void evaluatePrefix(string expression, Stack testStack);
-void menu(int &choice);
+void menu(int& choice);
 
 int main() {
     Stack testStack;
@@ -205,7 +204,6 @@ int operatorPrecedance(char op) {
 string infixToPostfix(const string& infixExpression) {
     Stack tempStack;
     string postfixExpression;
-    bool isBracketClosed = false;
 
     for (char ch : infixExpression) {
         if (ch <= '9' and ch >= '0') {
@@ -219,11 +217,10 @@ string infixToPostfix(const string& infixExpression) {
                 tempStack.pop();
             }
 
-            if (isBracketClosed and (string(1, tempStack.topElementData()).find_first_of("/*") != string::npos)) {
+            if (string(1, tempStack.topElementData()).find_first_of("/*") != string::npos) {
                 postfixExpression += tempStack.topElementData();
                 postfixExpression += " ";
                 tempStack.pop();
-                isBracketClosed = false;
             }
 
             tempStack.push(ch);
@@ -236,7 +233,6 @@ string infixToPostfix(const string& infixExpression) {
                 postfixExpression += tempStack.topElementData();
                 postfixExpression += " ";
                 tempStack.pop();
-                isBracketClosed = true;
             }
 
             tempStack.pop();
@@ -283,12 +279,12 @@ double performOperation(double op1, double op2, char operation) {
 void evaluatePostfix(const string& expression, Stack testStack) {
     for (char ch : expression) {
         if (ch <= '9' and ch >= '0') {
-            testStack.push(ch);
+            testStack.push(int(ch) - 48);
         }
-        else if (ch == '+' or ch == '-' or ch == '*' or ch == '/' or ch == '^') {
-            double op2 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
+        else if (string(1, ch).find_first_of("+-*/^") != string::npos) {
+            double op2 = testStack.topElementData();
             testStack.pop();
-            double op1 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
+            double op1 = testStack.topElementData();
             testStack.pop();
 
             double result = performOperation(op1, op2, ch);
@@ -303,12 +299,12 @@ void evaluatePostfix(const string& expression, Stack testStack) {
 void evaluatePrefix(string expression, Stack testStack) {
     for (int ch = int(expression.length() - 1); ch >= 0; ch--) {
         if (expression[ch] <= '9' and expression[ch] >= '0') {
-            testStack.push(expression[ch]);
+            testStack.push(int(expression[ch]) - 48);
         }
         else if (expression[ch] == '+' or expression[ch] == '-' or expression[ch] == '*' or expression[ch] == '/') {
-            double op1 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
+            double op1 = testStack.topElementData();
             testStack.pop();
-            double op2 = (testStack.topElementData() >= '0' and testStack.topElementData() <= '9') ? (testStack.topElementData() - 48) : (testStack.topElementData());
+            double op2 = testStack.topElementData();
             testStack.pop();
 
             double result = performOperation(op1, op2, expression[ch]);
