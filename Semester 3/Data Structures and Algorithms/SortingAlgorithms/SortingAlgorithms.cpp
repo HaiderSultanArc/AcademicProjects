@@ -181,13 +181,60 @@ void SortingAlgorithms::mergeSort(int *array, int numberOfElements, bool visuali
 
         SortingAlgorithms::mergeSort(leftPart, midOfArray);
         SortingAlgorithms::mergeSort(rightPart, numberOfElements - midOfArray);
-        merge(leftPart, midOfArray, rightPart, numberOfElements - midOfArray, array, visualize);
+        SortingAlgorithms::merge(leftPart, midOfArray, rightPart, numberOfElements - midOfArray, array, visualize);
     }
 
     timeStop = clock();
     double time = double(timeStop - timeStart) / double(CLOCKS_PER_SEC);
 
     std::cout << std::endl << "Time taken by Merge Sort: " << time << " s" << std::endl;
+}
+
+void SortingAlgorithms::heapify(int* array, int numberOfElements, int index, bool visualize) {
+    int mi = index;
+    int li = (2 * index) + 1;
+    int ri = (2 * index) + 2;
+
+    if (li < numberOfElements and array[li] > array[mi]) {
+        mi = li;
+    }
+
+    if (ri < numberOfElements and array[ri] > array[mi]) {
+        mi = ri;
+    }
+
+    if (mi != index) {
+        std::swap(array[index], array[mi]);
+        SortingAlgorithms::heapify(array, numberOfElements, mi, visualize);
+    }
+}
+
+void SortingAlgorithms::heapSort(int* array, int numberOfElements, bool visualize) {
+    if (visualize) {
+        visualize = checkLargestToVisualize(array, numberOfElements);
+    }
+
+    clock_t timeStart, timeStop;
+    timeStart = clock();
+
+    for (int i = (numberOfElements / 2) - 1; i >= 0; i--) {
+        SortingAlgorithms::heapify(array, numberOfElements, i, visualize);
+    }
+
+    for (int i = numberOfElements - 1; i > 0; i--) {
+        std::swap(array[0], array[i]);
+
+        if (visualize) {
+            SortingAlgorithms::algorithmVisualization(array, numberOfElements, "Heap Sort");
+        }
+
+        SortingAlgorithms::heapify(array, i, 0, visualize);
+    }
+
+    timeStop = clock();
+    double time = double(timeStop - timeStart) / double(CLOCKS_PER_SEC);
+
+    std::cout << std::endl << "Time taken by Heap Sort: " << time << " s" << std::endl;
 }
 
 void SortingAlgorithms::algorithmVisualization(const int *array, int numberOfElements, const std::string& algorithm) {
