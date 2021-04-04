@@ -1,5 +1,7 @@
-#include "DataStructures.h"
+#include "SinglyLinkedList.h"
 #include <iostream>
+
+using namespace std;
 
 SinglyLinkedList::SinglyLinkedList() {
     this->head = nullptr;
@@ -13,8 +15,8 @@ void SinglyLinkedList::changeHead(double headData) {
     newHead->nextNode = this->head;
     this->head = newHead;
 
-    std::cout << std::endl << "Head Changed to new Node with Data: " << headData;
-    std::cout << std::endl;
+    cout << endl << "Head Changed to new Node with Data: " << headData;
+    cout << endl;
 }
 
 void SinglyLinkedList::addNode(double inputData) {
@@ -32,23 +34,23 @@ void SinglyLinkedList::addNode(double inputData) {
         this->tail = newNode;
     }
 
-    std::cout << std::endl << "Node Added!";
-    std::cout << std::endl;
+    cout << endl << "Node Added!";
+    cout << endl;
 }
 
 Node * SinglyLinkedList::requiredNode(Node *node, int nodeNumber) {
     if (this->head == nullptr) {
-        std::cerr << std::endl << nodeNumber + 1 << " is not Accessible, head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
-        std::cout << std::endl;
+        cerr << endl << nodeNumber + 1 << " is not Accessible, head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
+        cout << endl;
 
         return nullptr;
     }
 
     for (int currentNodeNumber = 0; currentNodeNumber < nodeNumber; currentNodeNumber++) {
         if (node->nextNode == nullptr) {
-            std::cerr << std::endl << nodeNumber + 1 << " is not a Node in Linked List (" << int(&this->head) << ")";
-            std::cout << std::endl << "Maximum Node Number: " << currentNodeNumber;
-            std::cout << std::endl;
+            cerr << endl << nodeNumber + 1 << " is not a Node in Linked List (" << int(&this->head) << ")";
+            cout << endl << "Maximum Node Number: " << currentNodeNumber;
+            cout << endl;
 
             return nullptr;
         }
@@ -89,8 +91,8 @@ void SinglyLinkedList::insertNode(int nodeNumber, double inputData) {
 
 void SinglyLinkedList::deleteNode(int nodeNumber) {
     if (nodeNumber == 0) {
-        std::cerr << std::endl << "You cannot delete the Head of the Linked List";
-        std::cout << std::endl;
+        cerr << endl << "You cannot delete the Head of the Linked List";
+        cout << endl;
     }
     else {
         Node* requiredNode;
@@ -101,14 +103,14 @@ void SinglyLinkedList::deleteNode(int nodeNumber) {
             return;
         }
         else if (requiredNode->nextNode->nextNode == nullptr) {
-            std::cerr << std::endl << "Tail cannot be Deleted!";
-            std::cout << std::endl;
+            cerr << endl << "Tail cannot be Deleted!";
+            cout << endl;
         }
         else {
             requiredNode->nextNode = requiredNode->nextNode->nextNode;
 
-            std::cout << std::endl << "Node: " << nodeNumber << " Deleted!";
-            std::cout << std::endl;
+            cout << endl << "Node: " << nodeNumber << " Deleted!";
+            cout << endl;
         }
     }
 }
@@ -124,18 +126,18 @@ void SinglyLinkedList::updateNode(int nodeNumber, double updateData) {
     else {
         requiredNode->data = updateData;
 
-        std::cout << std::endl << "Node: " << nodeNumber << " was Updated with Data: " << updateData;
-        std::cout << std::endl;
+        cout << endl << "Node: " << nodeNumber << " was Updated with Data: " << updateData;
+        cout << endl;
     }
 }
 
 void SinglyLinkedList::searchNode(double searchData, Node *node, int nodeNumber) {
     if (node == nullptr) {
-        std::cout << std::endl;
+        cout << endl;
     }
     else {
         if (node->data == searchData) {
-            std::cout << std::endl << "Data: " << node->data << " is in " << nodeNumber;
+            cout << endl << "Data: " << node->data << " is in " << nodeNumber;
         }
 
         this->searchNode(searchData, node->nextNode, nodeNumber + 1);
@@ -144,28 +146,48 @@ void SinglyLinkedList::searchNode(double searchData, Node *node, int nodeNumber)
 
 void SinglyLinkedList::searchNode(double searchData) {
     if (this->head == nullptr) {
-        std::cerr << std::endl << "Head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
-        std::cout << std::endl;
+        cerr << endl << "Head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
+        cout << endl;
     }
     else {
         this->searchNode(searchData, this->head, 0);
     }
 }
 
+void SinglyLinkedList::reverse() {
+    Node *previousNode;
+    Node *currentNode;
+    Node *nextNode;
+
+    previousNode = nullptr;
+
+    currentNode = this->head;
+    this->tail = this->head;
+
+    while (currentNode != nullptr) {
+        nextNode = currentNode->nextNode;
+        currentNode->nextNode = previousNode;
+        previousNode = currentNode;
+        currentNode = nextNode;
+    }
+
+    this->head = previousNode;
+}
+
 void SinglyLinkedList::display(Node* node) {
     if (node == nullptr) {
-        std::cout << std::endl;
+        cout << endl;
     }
     else {
-        std::cout << std::endl << "Data: " << node->data;
+        cout << endl << "Data: " << node->data;
         this->display(node->nextNode);
     }
 }
 
 void SinglyLinkedList::display() {
     if (this->head == nullptr) {
-        std::cerr << std::endl << "Head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
-        std::cout << std::endl;
+        cerr << endl << "Head of LinkedList (" << int(&this->head) << ") is a Null Pointer!";
+        cout << endl;
     }
     else {
         this->display(this->head);

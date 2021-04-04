@@ -26,6 +26,7 @@ public:
     void deleteNode(int nodeNumber);
     void updateNode(int nodeNumber, double updateData);
     void searchNode(double searchData);
+    void reverse();
     void display();
 
 private:
