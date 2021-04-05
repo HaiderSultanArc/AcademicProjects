@@ -178,6 +178,25 @@ void AVL_BST::deleteData(int deleteData) {
     this->root = this->deleteData(this->root, deleteData);
 }
 
+Leaf* AVL_BST::searchData(Leaf* leaf, int searchData) {
+    if (leaf == nullptr) {
+        return nullptr;
+    }
+    else if (leaf->data == searchData) {
+        return leaf;
+    }
+    else if (searchData < leaf->data) {
+        return this->searchData(leaf->leftLeaf, searchData);
+    }
+    else {
+        return this->searchData(leaf->rightLeaf, searchData);
+    }
+}
+
+Leaf* AVL_BST::searchData(int searchData) {
+    return this->searchData(this->root, searchData);
+}
+
 int AVL_BST::getLeftDepth(Leaf* leaf) {
     if (leaf == nullptr) {
         return -1;
@@ -235,5 +254,66 @@ void AVL_BST::preOrderTraversal(Leaf* leaf) {
 void AVL_BST::preOrderTraversal() {
     std::cout << std::endl;
     this->preOrderTraversal(this->root);
+    std::cout << std::endl;
+}
+
+void AVL_BST::inOrderTraversal(Leaf* leaf) {
+    if (leaf == nullptr) {
+        return;
+    }
+
+    this->inOrderTraversal(leaf->leftLeaf);
+    std::cout << std::endl << "Data: " << leaf->data;
+    this->inOrderTraversal(leaf->rightLeaf);
+}
+
+void AVL_BST::inOrderTraversal() {
+    std::cout << std::endl;
+    this->inOrderTraversal(this->root);
+    std::cout << std::endl;
+}
+
+void AVL_BST::postOrderTraversal(Leaf* leaf) {
+    if (leaf == nullptr) {
+        return;
+    }
+
+    this->postOrderTraversal(leaf->leftLeaf);
+    this->postOrderTraversal(leaf->rightLeaf);
+    std::cout << std::endl << "Data: " << leaf->data;
+}
+
+void AVL_BST::postOrderTraversal() {
+    std::cout << std::endl;
+    this->postOrderTraversal(this->root);
+    std::cout << std::endl;
+}
+
+void AVL_BST::levelOrderTraversal(std::queue<Leaf*> leafQueue) {
+    if (leafQueue.empty()) {
+        return;
+    }
+
+    Leaf* currentLeaf = leafQueue.front();
+    std::cout << std::endl << "Data: " << currentLeaf->data;
+    leafQueue.pop();
+
+    if (currentLeaf->leftLeaf != nullptr) {
+        leafQueue.push(currentLeaf->leftLeaf);
+    }
+
+    if (currentLeaf->rightLeaf != nullptr) {
+        leafQueue.push(currentLeaf->rightLeaf);
+    }
+
+    this->levelOrderTraversal(leafQueue);
+}
+
+void AVL_BST::levelOrderTraversal() {
+    std::cout << std::endl;
+    std::queue<Leaf*> leafQueue;
+
+    leafQueue.push(this->root);
+    this->levelOrderTraversal(leafQueue);
     std::cout << std::endl;
 }
