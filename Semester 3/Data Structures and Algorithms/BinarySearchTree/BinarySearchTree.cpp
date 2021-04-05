@@ -12,10 +12,6 @@ Leaf* BinarySearchTree::createNewLeaf(int inputData) {
     return newLeaf;
 }
 
-[[maybe_unused]] BinarySearchTree::BinarySearchTree(int inputData) {
-    this->root = BinarySearchTree::createNewLeaf(inputData);
-}
-
 void BinarySearchTree::insertData(Leaf* &leaf, int inputData) {
     if (leaf == nullptr) {
         leaf = BinarySearchTree::createNewLeaf(inputData);
@@ -186,42 +182,6 @@ std::deque<Leaf *> BinarySearchTree::getLeavesInOrder() {
     return leafQueue;
 }
 
-void BinarySearchTree::convertSkewed(Leaf* &leaf, bool rightSkewed) {
-    std::deque<Leaf*> inOrderLeaves;
-    std::deque<Leaf*> deleteLeaves;
-    inOrderLeaves = this->getLeavesInOrder();
-    deleteLeaves = inOrderLeaves;
-
-    int numberOfLeaves = inOrderLeaves.size();
-
-    if (rightSkewed) {
-        for (int i = 0; i < numberOfLeaves; i++) {
-            this->deleteData(deleteLeaves.front()->data);
-            deleteLeaves.pop_front();
-        }
-
-        for (int i = 0; i < numberOfLeaves; i++) {
-            this->insertData(inOrderLeaves.front()->data);
-            inOrderLeaves.pop_front();
-        }
-    }
-    else {
-        for (int i = 0; i < numberOfLeaves; i++) {
-            this->deleteData(deleteLeaves.back()->data);
-            deleteLeaves.pop_back();
-        }
-
-        for (int i = 0; i < numberOfLeaves; i++) {
-            this->insertData(inOrderLeaves.back()->data);
-            inOrderLeaves.pop_back();
-        }
-    }
-}
-
-void BinarySearchTree::convertLeftSkewed() {
-    this->convertSkewed(this->root, false);
-}
-
 Leaf* BinarySearchTree::getSuccessor(Leaf* ancestorLeaf, Leaf* currentLeaf, Leaf* &successorLeaf) {
     if (ancestorLeaf == currentLeaf) {
         return successorLeaf;
@@ -235,7 +195,7 @@ Leaf* BinarySearchTree::getSuccessor(Leaf* ancestorLeaf, Leaf* currentLeaf, Leaf
         ancestorLeaf = ancestorLeaf->rightLeaf;
     }
 
-    this->getSuccessor(ancestorLeaf, currentLeaf, successorLeaf);
+    return this->getSuccessor(ancestorLeaf, currentLeaf, successorLeaf);
 }
 
 Leaf* BinarySearchTree::getSuccessor(int leafData) {
@@ -254,36 +214,6 @@ Leaf* BinarySearchTree::getSuccessor(int leafData) {
 
         return this->getSuccessor(ancestorLeaf, currentLeaf, successorLeaf);
     }
-}
-
-Leaf* BinarySearchTree::rightRotation(Leaf* leaf) {
-    Leaf* rotatedLeaf = leaf->leftLeaf;
-    Leaf* rotatedLeafRight = leaf->rightLeaf;
-
-    rotatedLeaf->rightLeaf = leaf;
-    leaf->leftLeaf = rotatedLeafRight;
-
-    return rotatedLeaf;
-}
-
-void BinarySearchTree::rightRotation(int leafData) {
-    Leaf* requiredLeaf = this->searchData(leafData);
-    requiredLeaf = this->rightRotation(requiredLeaf);
-}
-
-Leaf* BinarySearchTree::leftRotation(Leaf* leaf) {
-    Leaf* rotatedLeaf = leaf->rightLeaf;
-    Leaf* rotatedLeafLeft = rotatedLeaf->leftLeaf;
-
-    rotatedLeaf->leftLeaf = leaf;
-    leaf->rightLeaf = rotatedLeafLeft;
-
-    return rotatedLeaf;
-}
-
-void BinarySearchTree::leftRotation(int leafData) {
-    Leaf* requiredLeaf = this->searchData(leafData);
-    this->leftRotation(requiredLeaf);
 }
 
 int BinarySearchTree::getLeftDepth(Leaf* leaf) {

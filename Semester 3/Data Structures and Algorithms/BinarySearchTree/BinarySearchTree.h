@@ -22,8 +22,6 @@ private:
 public:
     BinarySearchTree();
 
-    [[maybe_unused]] explicit BinarySearchTree(int inputData);
-
     void insertData(int inputData);
     Leaf* searchData(int searchData);
     void deleteData(int deleteData);
@@ -32,11 +30,7 @@ public:
     void postOrderTraversal();
     void levelOrderTraversal();
     std::deque<Leaf*> getLeavesInOrder();
-    void convertLeftSkewed();
-    void convertRightSkewed();
     Leaf* getSuccessor(int leafData);
-    void rightRotation(int leafData);
-    void leftRotation(int leafData);
     int getDepth();
     Leaf* minData();
     Leaf* maxData();
@@ -51,10 +45,7 @@ private:
     void postOrderTraversal(Leaf* leaf);
     void levelOrderTraversal(std::queue<Leaf*> leafQueue);
     void getLeafInOrder(Leaf* leaf, std::deque<Leaf*> &leafQueue);
-    void convertSkewed(Leaf* &leaf, bool rightSkewed = true);
     Leaf* getSuccessor(Leaf* ancestorLeaf, Leaf* currentLeaf, Leaf* &successorLeaf);
-    Leaf* rightRotation(Leaf* leaf);
-    Leaf* leftRotation(Leaf* leaf);
     int getLeftDepth(Leaf* leaf);
     int getRightDepth(Leaf* leaf);
     Leaf* minData(Leaf* leaf);
