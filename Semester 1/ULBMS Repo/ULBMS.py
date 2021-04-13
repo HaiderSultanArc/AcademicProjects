@@ -130,7 +130,7 @@ def isValidBookName(bookName):
 
 
 def isValidBookCopyID(bookCopyId):
-    if (len(bookCopyId == MAX_COPY_NUMBER - 1)):
+    if (len(bookCopyId) == (MAX_COPY_NUMBER - 1)):
         splitID = bookCopyId.split['#']
 
         if (isValidBookId(splitID[0])):
